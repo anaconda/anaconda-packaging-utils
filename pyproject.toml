@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+namespaces = false
+
+[tool.setuptools.package-data]
+"anaconda_packaging_utils" = ["py.typed"]
+
+[project]
+name = "anaconda_packaging_utils"
+version = "0.0.1"
+authors = [
+  { name="Anaconda, Inc.", email="distribution_team@anaconda.com" },
+]
+description = "Collection of utilities used by the Packaging Automation and Tools Team"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.11"
+keywords = ["library", "utilities", "utils"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Utilities",
+]
+dependencies = [
+  "requests",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
+conda_build = ["conda-build"]
+
+[project.urls]
+"Homepage" = "https://github.com/anaconda-distribution/anaconda-packaging-utils"
+"Bug Tracker" = "https://github.com/anaconda-distribution/anaconda-packaging-utils/issues"
+"Repository" = "https://github.com/anaconda-distribution/anaconda-packaging-utils"
+"Documentation" = "https://github.com/anaconda-distribution/anaconda-packaging-utils/blob/main/README.md"
+
+# This causes an error saying that 'packages' is already defined and can't be overwritten.
+#[tool.setuptools]
+#packages = ["anaconda_packaging_utils"]
