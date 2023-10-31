@@ -1,0 +1,7 @@
+token:
+  github: aec070645fe53ee3b3763059376134f058cc337247c978add178b6ccdfb0019f
+local_paths:
+  aggregate: /home/fakeuser/work/aggregate
+  fake: notreal
+foo:
+  bar: baz
