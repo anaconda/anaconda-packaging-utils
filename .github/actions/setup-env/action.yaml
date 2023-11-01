@@ -1,0 +1,38 @@
+name: Set up environment
+description: Set up an anaconda-packaging-utils environment
+
+inputs:
+  python-version:
+    description: The version of Python to install, as a string
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: 'pip'
+    - name: Cache conda env
+      id: cache-conda
+      uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+      env:
+        cache-name: conda-env-cache
+      with:
+        cache: 'pip'
+        path: '/usr/share/miniconda/envs'
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/environment.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Create Environment
+      shell: bash
+      if: ${{ steps.cache-conda.outputs.cache-hit == false }}
+      run: |
+        conda update -n base -c defaults conda
+        source $CONDA/etc/profile.d/conda.sh
+        conda init bash
+        conda env create -f environment.yaml --name anaconda-packaging-utils --force
+        conda run --name anaconda-packaging-utils pip install .
+        conda activate anaconda-packaging-utils
