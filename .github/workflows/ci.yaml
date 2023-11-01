@@ -16,6 +16,9 @@ jobs:
         - uses: ./.github/actions/setup-env
           with:
             python-version: "3.11"
+        - run: |
+            source $CONDA/bin/activate
+            conda activate anaconda-packaging-utils
         - uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # v3.0.0
   test:
       runs-on: ubuntu-latest
@@ -29,4 +32,6 @@ jobs:
           with:
             python-version: ${{ matrix.python-version }}
         - run: |
+            source $CONDA/bin/activate
+            conda activate anaconda-packaging-utils
             make test
