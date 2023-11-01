@@ -4,7 +4,6 @@ on:
       - main
   pull_request:
 
-
 name: Code Checks
 
 jobs:
@@ -17,12 +16,7 @@ jobs:
         - uses: ./.github/actions/setup-env
           with:
             python-version: "3.11"
-        # TODO explain
-        # - uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # v3.0.0
-        - run: |
-            source $CONDA/bin/activate
-            conda activate anaconda-packaging-utils
-            make PYTHON3=python3 pre-commit
+        - uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # v3.0.0
   test:
       runs-on: ubuntu-latest
       name: Test on ${{ matrix.python-version }}
@@ -35,6 +29,4 @@ jobs:
           with:
             python-version: ${{ matrix.python-version }}
         - run: |
-            source $CONDA/bin/activate
-            conda activate anaconda-packaging-utils
-            make PYTHON3=python3 test
+            make test
