@@ -20,7 +20,7 @@ jobs:
         - run: |
             source $CONDA/bin/activate
             conda activate anaconda-packaging-utils
-            make test
+            make pre-commit
   test:
       runs-on: ubuntu-latest
       name: Test on ${{ matrix.python-version }}
