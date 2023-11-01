@@ -35,4 +35,3 @@ runs:
         conda init bash
         conda env create -f environment.yaml --name anaconda-packaging-utils --force
         conda run --name anaconda-packaging-utils pip install .
-        conda activate anaconda-packaging-utils
