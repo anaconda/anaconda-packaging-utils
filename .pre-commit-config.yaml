@@ -5,7 +5,7 @@
 exclude: ^(.*/versioneer\.py|.*/_version\.py|.*/.*\.svg)
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v4.5.0
   hooks:
   - id: check-added-large-files
     exclude_types: ["json"]
@@ -36,12 +36,12 @@ repos:
   - id: isort
     args: ["--profile", "black", --line-length=120]
 - repo: https://github.com/psf/black
-  rev: 23.7.0
+  rev: 23.10.1
   hooks:
   - id: black
     args: [--line-length=120]
 - repo: https://github.com/PyCQA/pylint
-  rev: v2.17.5
+  rev: v3.0.2
   hooks:
   - id: pylint
     args: ["--rcfile=.pylintrc"]
