@@ -3,11 +3,16 @@ File:           test_subshell.py
 Description:    Tests subshell utility library
                 TODO Proper mocking for `subprocess.run()`
 """
+import platform
+
+import pytest
+
 from anaconda_packaging_utils.cli import subshell
 
 TEST_PATH = "anaconda_packaging_utils/tests"
 
 
+@pytest.mark.skipif(platform.system() == "Windows", reason="`subshell` is not supported on Windows")
 def test_run_shell_success() -> None:
     """
     Ensures STDOUT is captured and a success code is returned
@@ -18,6 +23,7 @@ def test_run_shell_success() -> None:
     assert result.returncode == 0
 
 
+@pytest.mark.skipif(platform.system() == "Windows", reason="`subshell` is not supported on Windows")
 def test_run_shell_failure() -> None:
     """
     Ensures STDERR is captured and a failure code is returned
@@ -28,6 +34,7 @@ def test_run_shell_failure() -> None:
     assert result.returncode != 0
 
 
+@pytest.mark.skipif(platform.system() == "Windows", reason="`subshell` is not supported on Windows")
 def test_run_shell_chain_success() -> None:
     """
     Ensures STDOUT is captured and a success code is returned if all chained
@@ -48,6 +55,7 @@ def test_run_shell_chain_success() -> None:
         assert result.returncode == 0
 
 
+@pytest.mark.skipif(platform.system() == "Windows", reason="`subshell` is not supported on Windows")
 def test_run_shell_chain_failure_continue() -> None:
     """
     Ensures STDERR is captured and a failure code is returned in the event
@@ -73,6 +81,7 @@ def test_run_shell_chain_failure_continue() -> None:
     assert results[2].returncode == 0
 
 
+@pytest.mark.skipif(platform.system() == "Windows", reason="`subshell` is not supported on Windows")
 def test_run_shell_chain_failure_fail_fast() -> None:
     """
     Ensures STDERR is captured and a failure code is returned in the event
@@ -96,6 +105,7 @@ def test_run_shell_chain_failure_fail_fast() -> None:
     assert results[1].returncode != 0
 
 
+@pytest.mark.skipif(platform.system() == "Windows", reason="`subshell` is not supported on Windows")
 def test_run_shell_chain_can_cd() -> None:
     """
     Ensures that `cd` commands change the current working directory of a series

@@ -1,6 +1,9 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.1.2
+- Minor release, disabling some tests on Windows
+
 ## 0.1.1
 - Minor release, fixes a handful of issues in `environment.yaml`
 
