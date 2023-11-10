@@ -111,4 +111,4 @@ format-docs:	## runs the docstring auto-formatter. Note this requires manually i
 	docconvert --in-place --config .docconvert.json anaconda_packaging_utils
 
 analyze:					## runs static analyzer on the project
-	mypy --config-file=.mypy.ini anaconda_packaging_utils/
+	mypy --config-file=.mypy.ini --cache-dir=/dev/null anaconda_packaging_utils/
