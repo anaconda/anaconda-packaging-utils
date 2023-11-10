@@ -15,7 +15,7 @@ TEMP_FILE_PREFIX: Final[str] = "anaconda-packaging-utils-"
 def write_file(file: Path | str, content: str | list[str]) -> None:
     """
     Writes text to a file
-    :param file:    File name/path to file to write
+    :param file: File name/path to file to write
     :param content: String (or list of strings) to write to a file. If a list is given, strings are written line-by-line
     """
     # Ensure `path` is always a path.
@@ -38,8 +38,8 @@ def write_temp_file(content: str | list[str], tag: str = "") -> Path:
     BE AWARE of the security implications of this.
 
     :param content: String (or list of strings) to write to a file. If a list is given, strings are written line-by-line
-    :param tag:     (Optional) Tag to further help identify the temporary file
-    :return: Path to the temp file that was written to
+    :param tag: (Optional) Tag to further help identify the temporary file
+    :returns: Path to the temp file that was written to
     """
     # Naming the file with some origin information allows others to point fingers when we don't clean-up after ourselves
     if tag:
