@@ -60,7 +60,7 @@ class GitHubApi:
     def __init__(self) -> None:
         """
         Constructs a GitHubApi Instance
-        :raises ApiException:   If there was a failure to authenticate.
+        :raises ApiException: If there was a failure to authenticate.
         """
         if len(GitHubApi._gh) == 0:
             try:
@@ -71,8 +71,8 @@ class GitHubApi:
     def fetch_aggregate(self) -> Repository.Repository:
         """
         Convenience function for accessing the `aggregate` repo.
-        :raises ApiException:   If there was a failure to access the repo.
-        :return: Repository object that represents `aggregate`.
+        :raises ApiException: If there was a failure to access the repo.
+        :returns: Repository object that represents `aggregate`.
         """
         try:
             return GitHubApi._gh[0].get_repo(REPO_AGGREGATE_PATH)
@@ -82,10 +82,10 @@ class GitHubApi:
     def fetch_feedstock(self, package: str) -> tuple[Repository.Repository, Optional[str]]:
         """
         Convenience function for accessing a feedstock repository.
-        :param package:         Name of the target package.
-        :raises ApiException:   If there was a failure to access the repo.
-        :return: Repository object that represents the target package feedstock AND if possible, the SHA-1 hash of the
-                 version of the repo set in `aggregate`.
+        :param package: Name of the target package.
+        :raises ApiException: If there was a failure to access the repo.
+        :returns: Repository object that represents the target package feedstock AND if possible, the SHA-1 hash of the
+            version of the repo set in `aggregate`.
         """
         # Treat `aggregate` as the initial source of truth. As `aggregate` "should" be what's publicly available, we
         # should use it as a basis of our target feedstock version.
@@ -123,9 +123,9 @@ class GitHubApi:
     def fetch_recipe(self, package: str) -> Recipe:  # type: ignore[no-any-unimported]
         """
         Pulls a recipe file down for use with `percy`.
-        :param package:         Name of the target package.
-        :raises ApiException:   If there was a failure to access the repo.
-        :return: Recipe, as a Percy object.
+        :param package: Name of the target package.
+        :raises ApiException: If there was a failure to access the repo.
+        :returns: Recipe, as a Percy object.
         """
         feedstock, sha = self.fetch_feedstock(package)
         # Render-safe for the API, default to empty string

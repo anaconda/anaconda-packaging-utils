@@ -11,7 +11,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 # Ensure that we are using the python interpretter provided by the conda environment.
 PYTHON3 := "$(CONDA_PREFIX)/bin/python3"
 
-.PHONY: clean clean-cov clean-build clean-env clean-pyc clean-test help pre-commit test test-cov lint format analyze
+.PHONY: clean clean-cov clean-build clean-env clean-pyc clean-test help pre-commit test test-cov lint format format-docs analyze
 .DEFAULT_GOAL := help
 
 CONDA_ENV_NAME ?= anaconda-packaging-utils
@@ -106,6 +106,9 @@ lint:						## runs the linter against the project
 format:						## runs the code auto-formatter
 	isort --profile black --line-length=120 anaconda_packaging_utils
 	black --line-length=120 anaconda_packaging_utils
+
+format-docs:	## runs the docstring auto-formatter. Note this requires manually installing `docconvert`
+	docconvert --in-place --config .docconvert.json anaconda_packaging_utils
 
 analyze:					## runs static analyzer on the project
 	mypy --config-file=.mypy.ini anaconda_packaging_utils/

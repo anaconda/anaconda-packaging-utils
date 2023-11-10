@@ -31,7 +31,7 @@ def _generate_config_schema() -> SchemaType:
 
     `types-jsonschema` defines their schema type with an `Any`, and that upsets `mypy` to the point where it'll throw
     multiple errors on almost every line of the schema definition.
-    :return: Config Data Schema
+    :returns: Config Data Schema
     """
     return {
         "type": "object",
@@ -109,7 +109,7 @@ class ConfigData:
     def __str__(self) -> str:
         """
         Pretty-prints the configuration data key-value map as a string. Use only for debugging purposes.
-        :return: Pretty-printed version of the key-value table.
+        :returns: Pretty-printed version of the key-value table.
         """
         with ConfigData._mutex:
             return json.dumps(ConfigData._config_tbl, indent=2)
@@ -117,7 +117,7 @@ class ConfigData:
     def __contains__(self, key: str) -> bool:
         """
         Returns true if a key-path is found.
-        :return: True if the key-path is found. False otherwise.
+        :returns: True if the key-path is found. False otherwise.
         """
         with ConfigData._mutex:
             return key in ConfigData._config_tbl
@@ -125,9 +125,9 @@ class ConfigData:
     def __getitem__(self, key: str) -> str:
         """
         Returns a value by a key-path.
-        :param key:         Full key that describes a value
-        :raises KeyError:   If the key is not found
-        :return: The value found at the provided key
+        :param key: Full key that describes a value
+        :raises KeyError: If the key is not found
+        :returns: The value found at the provided key
         """
         with ConfigData._mutex:
             return ConfigData._config_tbl[key]
