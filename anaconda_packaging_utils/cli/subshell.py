@@ -11,13 +11,13 @@ import subprocess
 def run_shell(cmd: str, capture_output: bool = True, cwd: str = "") -> subprocess.CompletedProcess[str]:
     """
     Utility wrapper around `subprocess.run()` that provides the ability to run shell commands outside of Python.
-    :param cmd:             Command to execute
-    :param capture_output:  (Optional) Indicates if the output is directly printed to the console or if it is buffered
-                            and put into a string. If the called command prompts for input that can't be suppressed
-                            (like a password) this flag should be set to `False`
-    :param cwd:             (Optional) "Current Working Directory", changes the path that the shell operates in.
-                            Effectively acts as if you ran `cd` prior to the command.
-    :return: Process object including a POSIX-style return code
+    :param cmd: Command to execute
+    :param capture_output: (Optional) Indicates if the output is directly printed to the console or if it is buffered
+        and put into a string. If the called command prompts for input that can't be suppressed (like a password) this
+        flag should be set to `False`
+    :param cwd: (Optional) "Current Working Directory", changes the path that the shell operates in. Effectively acts as
+        if you ran `cd` prior to the command.
+    :returns: Process object including a POSIX-style return code
     """
     output = subprocess.run(
         cmd,
@@ -46,17 +46,16 @@ def run_shell_chain(
     """
     Runs a series of shell commands in a chain. If one command fails, the whole chain fails and execution stops. Note:
     `cd` commands are specially processed and run with the "Current Working Directory" (cwd) feature of `subprocess.run`
-    :param cmds:            List of commands to execute in a sequence
-    :param capture_output:  (Optional) Indicates if the output is directly printed to the console or if it is buffered
-                            and put into a string. If the called command prompts for input that can't be suppressed
-                            (like a password) this flag should be set to `False`
-    :param is_fatal_error:  (Optional) Stops chain execution on first command that returns a non-zero return code. The
-                            calling program can determine which command failed by looking at the length of the returned
-                            list and/or by looking at the `args` member of last-returned completed process object.
-    :param cwd:             (Optional) "Current Working Directory", changes the path that the shell operates in.
-                            Effectively acts as if you ran `cd` prior to the command. Note that if subsequent `cd`
-                            commands are used, this value is overwritten.
-    :return: Process object including a POSIX-style return code
+    :param cmds: List of commands to execute in a sequence
+    :param capture_output: (Optional) Indicates if the output is directly printed to the console or if it is buffered
+        and put into a string. If the called command prompts for input that can't be suppressed (like a password) this
+        flag should be set to `False`
+    :param is_fatal_error: (Optional) Stops chain execution on first command that returns a non-zero return code. The
+        calling program can determine which command failed by looking at the length of the returned list and/or by
+        looking at the `args` member of last-returned completed process object.
+    :param cwd: (Optional) "Current Working Directory", changes the path that the shell operates in. Effectively acts as
+        if you ran `cd` prior to the command. Note that if subsequent `cd` commands are used, this value is overwritten.
+    :returns: Process object including a POSIX-style return code
     """
     completed_procs = []
     for cmd in cmds:

@@ -52,7 +52,7 @@ class VersionMetadata:
     def get_schema() -> SchemaType:
         """
         Returns a JSON schema used to validate JSON responses.
-        :return: JSON schema for a packaging info
+        :returns: JSON schema for a packaging info
         """
         return {
             "type": "object",
@@ -114,10 +114,9 @@ class PackageInfo:
     def get_schema(requires_releases: bool) -> SchemaType:
         """
         Returns a JSON schema used to validate JSON responses.
-        :param requires_releases:   Depending on the endpoint used, the API will optionally return information about
-                                    every release/package version. Setting this to "True" will require the `releases`
-                                    property
-        :return: JSON schema for a packaging info
+        :param requires_releases: Depending on the endpoint used, the API will optionally return information about every
+            release/package version. Setting this to "True" will require the `releases` property
+        :returns: JSON schema for a packaging info
         """
         base: SchemaType = {
             "type": "object",
@@ -218,7 +217,7 @@ def _calc_package_metadata_url(package: str) -> str:
     """
     Generates the URL for fetching package metadata
     :param package: Name of the package
-    :return: REST endpoint to use to fetch package metadata
+    :returns: REST endpoint to use to fetch package metadata
     """
     return f"{BASE_URL}/{package}/json"
 
@@ -228,7 +227,7 @@ def _calc_package_version_metadata_url(package: str, version: str) -> str:
     Generates the URL for fetching package metadata, at a specific version
     :param package: Name of the package
     :param version: Version of the package
-    :return: REST endpoint to use to fetch package metadata
+    :returns: REST endpoint to use to fetch package metadata
     """
     return f"{BASE_URL}/{package}/{version}/json"
 
@@ -236,9 +235,9 @@ def _calc_package_version_metadata_url(package: str, version: str) -> str:
 def _make_request_and_validate(endpoint: str, schema: SchemaType) -> JsonType:
     """
     Makes an HTTP request against the API and validates the result.
-    :param endpoint:        REST endpoint (URL) used in this request
-    :param schema:          JSON schema to validate the results against
-    :raises ApiException:   If there is an unrecoverable issue with the API
+    :param endpoint: REST endpoint (URL) used in this request
+    :param schema: JSON schema to validate the results against
+    :raises ApiException: If there is an unrecoverable issue with the API
     """
     response = None
     try:
@@ -280,9 +279,9 @@ def _make_request_and_validate(endpoint: str, schema: SchemaType) -> JsonType:
 def _check_for_empty_field(field: str, value: str | None) -> None:
     """
     Convenience function that checks if a critical field is empty/null
-    :param field:           Field name (for debugging purposes)
-    :param value:           Value of the field to check
-    :raises ApiException:   If the field is empty
+    :param field: Field name (for debugging purposes)
+    :param value: Value of the field to check
+    :raises ApiException: If the field is empty
     """
     if value is None or len(value) == 0:
         raise ApiException(f"`{field}` field is empty: {value}")
@@ -291,10 +290,10 @@ def _check_for_empty_field(field: str, value: str | None) -> None:
 def _parse_version_metadata(data: JsonType) -> VersionMetadata:
     """
     Given a schema-validated JSON, parse version metadata
-    :param data:            JSON data to parse. Pre-req: This must have been previously validated against the schema
-                            provided by the class.
-    :raises ApiException:   If there is an unrecoverable issue with the API
-    :return: Version metadata, as an immutable dataclass object
+    :param data: JSON data to parse. Pre-req: This must have been previously validated against the schema provided by
+        the class.
+    :raises ApiException: If there is an unrecoverable issue with the API
+    :returns: Version metadata, as an immutable dataclass object
     """
     # Validate non-string fields
     time_str: Final[str] = data["upload_time_iso_8601"]  # type: ignore
@@ -335,10 +334,10 @@ def _parse_version_metadata(data: JsonType) -> VersionMetadata:
 def _parse_package_info(data: JsonType) -> PackageInfo:
     """
     Given a schema-validated JSON, parse version metadata
-    :param data:            JSON data to parse. Pre-req: This must have been previously validated against the schema
-                            provided by the class.
-    :raises ApiException:   If there is an unrecoverable issue with the API
-    :return: Package info, as an immutable dataclass object
+    :param data: JSON data to parse. Pre-req: This must have been previously validated against the schema provided by
+        the class.
+    :raises ApiException: If there is an unrecoverable issue with the API
+    :returns: Package info, as an immutable dataclass object
     """
     # Extract the VersionMetadata for "source" objects
     version_metadata: VersionMetadata | None = None
@@ -396,8 +395,8 @@ def _parse_package_info(data: JsonType) -> PackageInfo:
 def fetch_package_metadata(package: str) -> PackageMetadata:
     """
     Fetches and validates package metadata from the PyPi API.
-    :param package:         Name of the package
-    :raises ApiException:   If there is an unrecoverable issue with the API
+    :param package: Name of the package
+    :raises ApiException: If there is an unrecoverable issue with the API
     """
     response_json = _make_request_and_validate(
         _calc_package_metadata_url(package),
@@ -451,9 +450,9 @@ def fetch_package_metadata(package: str) -> PackageMetadata:
 def fetch_package_version_metadata(package: str, version: str) -> PackageMetadata:
     """
     Fetches and validates package metadata (at a specific version) from the PyPi API.
-    :param package:         Name of the package
-    :param version:         Version of the package
-    :raises ApiException:   If there is an unrecoverable issue with the API
+    :param package: Name of the package
+    :param version: Version of the package
+    :raises ApiException: If there is an unrecoverable issue with the API
     """
     response_json = _make_request_and_validate(
         _calc_package_version_metadata_url(package, version),
