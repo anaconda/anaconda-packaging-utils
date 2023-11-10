@@ -11,7 +11,7 @@ from typing import Final, Optional
 from github import Github, Repository
 
 # TODO enforce type checking when `percy` exports types
-from percy.render.recipe import Recipe  # type: ignore[import]
+from percy.render.recipe import Recipe
 
 import anaconda_packaging_utils.cryptography.utils as crypto_utils
 from anaconda_packaging_utils.storage import file_io
@@ -120,7 +120,7 @@ class GitHubApi:
         except Exception as e:
             raise ApiException(f"Failed to access `{feedstock_name}` from aggregate") from e
 
-    def fetch_recipe(self, package: str) -> Recipe:  # type: ignore[no-any-unimported]
+    def fetch_recipe(self, package: str) -> Recipe:
         """
         Pulls a recipe file down for use with `percy`.
         :param package: Name of the target package.
@@ -143,4 +143,4 @@ class GitHubApi:
             tag=f"{package}_recipe",
         )
         log.info("Recipe for `%s` downloaded to: %s", package, tmp)
-        return Recipe.from_file(tmp)  # type: ignore[misc]
+        return Recipe.from_file(tmp)  # type: ignore[arg-type, misc]
