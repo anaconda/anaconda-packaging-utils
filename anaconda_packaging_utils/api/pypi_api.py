@@ -6,10 +6,10 @@ Description:    Library that provides tooling for pulling information from the p
 """
 
 
-import dataclasses
 import datetime
 import logging
 import traceback
+from dataclasses import dataclass
 from typing import Final, no_type_check
 
 import requests
@@ -28,7 +28,7 @@ BASE_URL: Final[str] = "https://pypi.python.org/pypi"
 HTTP_REQ_TIMEOUT: Final[int] = 60
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class VersionMetadata:
     """
     Represents information stored in the object found in the "urls" or "releases/<version>" keys. This block contains
@@ -83,7 +83,7 @@ class VersionMetadata:
         }
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class PackageInfo:
     """
     Represents information stored in the "info"-keyed object found in both GET request types.
@@ -187,7 +187,7 @@ class PackageInfo:
         return base
 
 
-@dataclasses.dataclass
+@dataclass
 class PackageMetadata:
     """
     Class that represents all the metadata about a Package
