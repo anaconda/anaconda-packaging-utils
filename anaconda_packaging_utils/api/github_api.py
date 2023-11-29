@@ -97,7 +97,7 @@ class GitHubApi:
             if sha is not None and not crypto_utils.is_valid_sha1(sha):
                 log.warning("Received invalid SHA from `%s`: %s", package, sha)
                 sha = None
-        except Exception as e:  # pylint: disable=W0718
+        except Exception as e:  # pylint: disable=broad-exception-caught
             log.warning(
                 "Failed to acquire SHA of `%s` from `aggregate`," " with exception %s",
                 package,
