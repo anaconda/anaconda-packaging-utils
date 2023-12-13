@@ -143,4 +143,4 @@ class GitHubApi:
             tag=f"{package}_recipe",
         )
         log.info("Recipe for `%s` downloaded to: %s", package, tmp)
-        return Recipe.from_file(tmp)  # type: ignore[arg-type, misc]
+        return Recipe.from_file(tmp)
