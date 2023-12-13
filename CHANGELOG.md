@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.1.4
+- Moving to support only Python 3.11+
+- Fixes and improves the GitHub Actions to our latest standards
+
 ## 0.1.3
 - Minor release, `py.typed` was in the wrong directory and not part of the package.
 
