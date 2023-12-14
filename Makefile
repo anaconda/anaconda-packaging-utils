@@ -88,7 +88,7 @@ install: clean 				## install the package to the active (current environment's) 
 dev: clean					## install the package's development version to a fresh environment
 	conda env create -f environment.yaml --name $(CONDA_ENV_NAME) --force
 	conda run --name $(CONDA_ENV_NAME) pip install -e .
-	$(CONDA_ACTIVATE) anaconda-packaging-utils && pre-commit install
+	$(CONDA_ACTIVATE) $(CONDA_ENV_NAME) && pre-commit install
 
 test:						## executes unit test cases
 	$(PYTHON3) -m pytest -n auto --capture=no anaconda_packaging_utils/tests/
