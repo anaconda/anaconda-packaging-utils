@@ -16,6 +16,8 @@ VALID_SCHEMA_TO_STR: Final[
     str
 ] = """{
   "token.github": "aec070645fe53ee3b3763059376134f058cc",
+  "token.jira": "eac070645fe53ee3b3763059376134f058cc",
+  "user_info.email": "foobar@anaconda.com",
   "local_path.aggregate": "/home/fakeuser/work/aggregate"
 }"""
 
@@ -118,6 +120,8 @@ def test_caching() -> None:
     file_data = """
     token:
       github: aec070645fe53ee3b3763059376134f058cc
+    user_info:
+      email: foobar@anaconda.com
     local_path:
       aggregate: /home/fakeuser/work/aggregate
     """

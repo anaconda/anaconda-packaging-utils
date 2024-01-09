@@ -6,7 +6,7 @@ Description:    Library that provides tools for using the PyGitHub API.
                 wrappers.
 """
 import logging
-from typing import Final, Optional
+from typing import Callable, Final, Optional
 
 from github import Github, Repository
 
@@ -46,7 +46,7 @@ class ApiException(Exception):
 class GitHubApi:
     """
     Singleton wrapper to the PyGithub project. This "ensures" that we only construct and authenticate the underlying
-    Github object once. All convenience member.
+    Github object once.
 
     As best as I can tell, the `PyGitHub` project is not guaranteed to be thread safe. However, read-only GitHub API
     requests are not likely to cause a threading issue, by their very nature.
@@ -144,3 +144,16 @@ class GitHubApi:
         )
         log.info("Recipe for `%s` downloaded to: %s", package, tmp)
         return Recipe.from_file(tmp)
+
+    def access_github(self, callback: Callable[[Github], None]) -> None:
+        """
+        Execute GitHub commands via a callback. This ensures some amount of safety around our singleton design pattern
+        while also allowing the caller to full access of the API.
+        :param callback: Callback that provides access to the single Jira client instance
+        :raises ApiException: If the callback throws, it will re-wrap the exception into a generic `ApiException` for
+                              easier exception handling.
+        """
+        try:
+            callback(GitHubApi._gh[0])
+        except Exception as e:
+            raise ApiException("`access_github()` callback raised an exception") from e
