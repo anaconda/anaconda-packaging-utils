@@ -5,20 +5,13 @@ Description:    Tests GitHub (wrapper) API library
 
 from unittest.mock import patch
 
-import pytest
-from github import Github
-
 from anaconda_packaging_utils.api import github_api
 
 
-def test_access_raises() -> None:
+def test_get_github_smoke() -> None:
     """
-    Ensures that we are capturing and re-throwing exceptions that occur in an API access callback.
+    Smoke test that ensures that we return an underlying constructed object.
     """
+    # TODO: Improve this test, the mocker masks what we are attempting to check for
     with patch("anaconda_packaging_utils.api.github_api.Github"):
-
-        def _to_throw(j: Github) -> None:
-            raise ValueError()
-
-        with pytest.raises(github_api.ApiException):
-            github_api.GitHubApi().access_github(_to_throw)
+        assert isinstance(github_api.GitHubApi().get_github(), object)

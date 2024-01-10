@@ -8,7 +8,7 @@ Description:    Wrapper library that provides tools for using the Python JIRA AP
                   - Docs: https://jira.readthedocs.io/index.html#
 """
 import logging
-from typing import Callable, Final
+from typing import Final
 
 from jira.client import JIRA
 
@@ -45,19 +45,19 @@ class JiraApi:
     """
 
     # The Jira API is wrapped in a list as a cheesy way to work around an initialization problem. Defaulting to `None`
-    # or using an `Optional` causes the static analyzer to freak out on every use of the `_jira`, even if the static
+    # or using an `Optional` causes the static analyzer to freak out on every use of the `__jira`, even if the static
     # variable has to have been initialized by instance-method call time.
-    _jira: list[JIRA] = []
+    __jira: list[JIRA] = []
 
     def __init__(self) -> None:
         """
         Constructs a JiraApi instance
         :raises ApiException: If there was a failure to authenticate.
         """
-        if len(JiraApi._jira) == 0:
+        if len(JiraApi.__jira) == 0:
             data_store: Final[ConfigData] = ConfigData()
             try:
-                JiraApi._jira.append(
+                JiraApi.__jira.append(
                     JIRA(
                         _JIRA_HOST_URL,
                         basic_auth=(data_store["user_info.email"], data_store["token.jira"]),
@@ -66,15 +66,11 @@ class JiraApi:
             except Exception as e:
                 raise ApiException("Failed to auth or connect to JIRA") from e
 
-    def access_jira(self, callback: Callable[[JIRA], None]) -> None:
+    def get_jira(self) -> JIRA:
         """
-        Execute Jira commands via a callback. This ensures some amount of safety around our singleton design pattern
-        while also allowing the caller to full access of the API.
-        :param callback: Callback that provides access to the single Jira client instance
-        :raises ApiException: If the callback throws, it will re-wrap the exception into a generic `ApiException` for
-                              easier exception handling.
+        Exposes an authenticated JIRA API instance directly to the caller, allowing for full use of the API.
+        As this is a member function, successful construction of a `JiraApi` instance must have occurred previously
+        for this to be able to be called.
+        :returns: Authenticated instance of the underlying JIRA API
         """
-        try:
-            callback(JiraApi._jira[0])
-        except Exception as e:
-            raise ApiException("`access_jira()` callback raised an exception") from e
+        return JiraApi.__jira[0]

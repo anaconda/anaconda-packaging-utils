@@ -6,7 +6,7 @@ Description:    Library that provides tools for using the PyGitHub API.
                 wrappers.
 """
 import logging
-from typing import Callable, Final, Optional
+from typing import Final, Optional
 
 from github import Github, Repository
 
@@ -53,18 +53,18 @@ class GitHubApi:
     """
 
     # The GitHub API is wrapped in a list as a cheesy way to work around an initialization problem. Defaulting to `None`
-    # or using an `Optional` causes the static analyzer to freak out on every use of the `_gh`, even if the static
+    # or using an `Optional` causes the static analyzer to freak out on every use of the `__gh`, even if the static
     # variable has to have been initialized by instance-method call time.
-    _gh: list[Github] = []
+    __gh: list[Github] = []
 
     def __init__(self) -> None:
         """
         Constructs a GitHubApi Instance
         :raises ApiException: If there was a failure to authenticate.
         """
-        if len(GitHubApi._gh) == 0:
+        if len(GitHubApi.__gh) == 0:
             try:
-                GitHubApi._gh.append(Github(ConfigData()["token.github"]))
+                GitHubApi.__gh.append(Github(ConfigData()["token.github"]))
             except Exception as e:
                 raise ApiException("Failed to auth or connect to GitHub") from e
 
@@ -75,7 +75,7 @@ class GitHubApi:
         :returns: Repository object that represents `aggregate`.
         """
         try:
-            return GitHubApi._gh[0].get_repo(REPO_AGGREGATE_PATH)
+            return GitHubApi.__gh[0].get_repo(REPO_AGGREGATE_PATH)
         except Exception as e:
             raise ApiException("Failed to access `aggregate`") from e
 
@@ -114,7 +114,7 @@ class GitHubApi:
 
         try:
             return (
-                GitHubApi._gh[0].get_repo(f"{ANACONDA_RECIPE_BASE}/{feedstock_name}"),
+                GitHubApi.__gh[0].get_repo(f"{ANACONDA_RECIPE_BASE}/{feedstock_name}"),
                 sha,
             )
         except Exception as e:
@@ -145,15 +145,11 @@ class GitHubApi:
         log.info("Recipe for `%s` downloaded to: %s", package, tmp)
         return Recipe.from_file(tmp)
 
-    def access_github(self, callback: Callable[[Github], None]) -> None:
+    def get_github(self) -> Github:
         """
-        Execute GitHub commands via a callback. This ensures some amount of safety around our singleton design pattern
-        while also allowing the caller to full access of the API.
-        :param callback: Callback that provides access to the single Jira client instance
-        :raises ApiException: If the callback throws, it will re-wrap the exception into a generic `ApiException` for
-                              easier exception handling.
+        Exposes an authenticated GitHub API instance directly to the caller, allowing for full use of the API.
+        As this is a member function, successful construction of a `GitHubApi` instance must have occurred previously
+        for this to be able to be called.
+        :returns: Authenticated instance of the underlying GitHub API
         """
-        try:
-            callback(GitHubApi._gh[0])
-        except Exception as e:
-            raise ApiException("`access_github()` callback raised an exception") from e
+        return GitHubApi.__gh[0]
