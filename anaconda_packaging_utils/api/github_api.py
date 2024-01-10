@@ -14,6 +14,7 @@ from github import Github, Repository
 from percy.render.recipe import Recipe
 
 import anaconda_packaging_utils.cryptography.utils as crypto_utils
+from anaconda_packaging_utils.api._types import BaseApiException
 from anaconda_packaging_utils.storage import file_io
 from anaconda_packaging_utils.storage.config_data import ConfigData
 
@@ -26,21 +27,12 @@ ANACONDA_RECIPE_BASE: Final[str] = "AnacondaRecipes"
 REPO_AGGREGATE_PATH: Final[str] = f"{ANACONDA_RECIPE_BASE}/aggregate"
 
 
-class ApiException(Exception):
+class ApiException(BaseApiException):
     """
-    Generic exception indicating an unrecoverable failure of this API.
-
-    This exception is meant to condense many possible failures into one generic error. The thinking is, if the calling
-    code runs into any API failure, there isn't much that can be done. So it is easier for the caller to handle one
-    exception than many exception types.
+    Generic exception indicating an unrecoverable failure of this API. See the base class for more context.
     """
 
-    def __init__(self, message: str):
-        """
-        Constructs an API exception
-        :param message: String description of the issue encountered.
-        """
-        super().__init__(message if len(message) else "An unknown API issue was encountered.")
+    pass
 
 
 class GitHubApi:
@@ -62,7 +54,7 @@ class GitHubApi:
         Constructs a GitHubApi Instance
         :raises ApiException: If there was a failure to authenticate.
         """
-        if len(GitHubApi.__gh) == 0:
+        if not GitHubApi.__gh:
             try:
                 GitHubApi.__gh.append(Github(ConfigData()["token.github"]))
             except Exception as e:
@@ -145,7 +137,8 @@ class GitHubApi:
         log.info("Recipe for `%s` downloaded to: %s", package, tmp)
         return Recipe.from_file(tmp)
 
-    def get_github(self) -> Github:
+    @property
+    def github(self) -> Github:
         """
         Exposes an authenticated GitHub API instance directly to the caller, allowing for full use of the API.
         As this is a member function, successful construction of a `GitHubApi` instance must have occurred previously

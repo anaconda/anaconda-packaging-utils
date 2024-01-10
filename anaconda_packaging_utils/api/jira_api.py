@@ -12,30 +12,19 @@ from typing import Final
 
 from jira.client import JIRA
 
+from anaconda_packaging_utils.api._types import BaseApiException
 from anaconda_packaging_utils.storage.config_data import ConfigData
 
 # Logging object for this module
 log = logging.getLogger(__name__)
 
-# Where our JIRA boards are hosted
-_JIRA_HOST_URL: Final[str] = "https://anaconda.atlassian.net/"
 
-
-class ApiException(Exception):
+class ApiException(BaseApiException):
     """
-    Generic exception indicating an unrecoverable failure of this API.
-
-    This exception is meant to condense many possible failures into one generic error. The thinking is, if the calling
-    code runs into any API failure, there isn't much that can be done. So it is easier for the caller to handle one
-    exception than many exception types.
+    Generic exception indicating an unrecoverable failure of this API. See the base class for more context.
     """
 
-    def __init__(self, message: str):
-        """
-        Constructs an API exception
-        :param message: String description of the issue encountered.
-        """
-        super().__init__(message if len(message) else "An unknown API issue was encountered.")
+    pass
 
 
 class JiraApi:
@@ -49,24 +38,28 @@ class JiraApi:
     # variable has to have been initialized by instance-method call time.
     __jira: list[JIRA] = []
 
+    # Where our JIRA boards are hosted
+    __JIRA_HOST_URL: Final[str] = "https://anaconda.atlassian.net/"
+
     def __init__(self) -> None:
         """
         Constructs a JiraApi instance
         :raises ApiException: If there was a failure to authenticate.
         """
-        if len(JiraApi.__jira) == 0:
+        if not JiraApi.__jira:
             data_store: Final[ConfigData] = ConfigData()
             try:
                 JiraApi.__jira.append(
                     JIRA(
-                        _JIRA_HOST_URL,
+                        JiraApi.__JIRA_HOST_URL,
                         basic_auth=(data_store["user_info.email"], data_store["token.jira"]),
                     )
                 )
             except Exception as e:
                 raise ApiException("Failed to auth or connect to JIRA") from e
 
-    def get_jira(self) -> JIRA:
+    @property
+    def jira(self) -> JIRA:
         """
         Exposes an authenticated JIRA API instance directly to the caller, allowing for full use of the API.
         As this is a member function, successful construction of a `JiraApi` instance must have occurred previously

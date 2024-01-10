@@ -16,4 +16,4 @@ def test_get_github_smoke() -> None:
     Smoke test that ensures that we return an underlying constructed object.
     """
     with patch("anaconda_packaging_utils.api.github_api.Github"):
-        assert isinstance(github_api.GitHubApi().get_github(), object)
+        assert isinstance(github_api.GitHubApi().github, object)

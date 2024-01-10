@@ -16,4 +16,4 @@ def test_get_jira_smoke() -> None:
     Smoke test that ensures that we return an underlying constructed object.
     """
     with patch("anaconda_packaging_utils.api.jira_api.JIRA"):
-        assert isinstance(jira_api.JiraApi().get_jira(), object)
+        assert isinstance(jira_api.JiraApi().jira, object)
