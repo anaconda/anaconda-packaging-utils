@@ -28,4 +28,5 @@ class BaseApiException(Exception):
         Constructs an API exception
         :param message: String description of the issue encountered.
         """
-        super().__init__(message if len(message) else "An unknown API issue was encountered.")
+        self.message = message if len(message) else "An unknown API issue was encountered."
+        super().__init__(self.message)
