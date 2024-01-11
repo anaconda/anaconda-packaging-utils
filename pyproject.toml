@@ -34,7 +34,14 @@ classifiers = [
     "Topic :: Utilities",
 ]
 dependencies = [
+  "jsonschema",
+  "types-jsonschema",
+  "PyGithub",
+  "jira",
+  "pyyaml",
+  "types-pyyaml",
   "requests",
+  "types-requests",
 ]
 
 [project.optional-dependencies]
