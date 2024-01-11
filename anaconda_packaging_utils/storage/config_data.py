@@ -37,13 +37,20 @@ def _generate_config_schema() -> SchemaType:
         "type": "object",
         "required": [
             "token",
+            "user_info",
             "local_path",
         ],
         "properties": {
+            # Tokens are generally not required as some developers may not need to use all of the APIs/tools that
+            # require tokens
             "token": {
                 "type": "object",
-                "required": ["github"],
-                "properties": {"github": {"type": "string"}},
+                "properties": {"github": {"type": "string"}, "jira": {"type": "string"}},
+            },
+            "user_info": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {"email": {"type": "string"}},
             },
             "local_path": {
                 "type": "object",
@@ -108,7 +115,8 @@ class ConfigData:
 
     def __str__(self) -> str:
         """
-        Pretty-prints the configuration data key-value map as a string. Use only for debugging purposes.
+        Pretty-prints the configuration data key-value map as a string.
+        USE ONLY FOR DEBUGGING/TESTING PURPOSES; WE DO NOT WANT TO LOG KEYS AND TOKENS!
         :returns: Pretty-printed version of the key-value table.
         """
         with ConfigData._mutex:

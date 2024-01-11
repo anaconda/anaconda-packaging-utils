@@ -1,4 +1,7 @@
 token:
   github: aec070645fe53ee3b3763059376134f058cc
+  jira: eac070645fe53ee3b3763059376134f058cc
+user_info:
+  email: foobar@anaconda.com
 local_path:
   aggregate: /home/fakeuser/work/aggregate

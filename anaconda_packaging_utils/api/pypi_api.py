@@ -16,6 +16,7 @@ import requests
 from jsonschema import validate as schema_validate
 
 import anaconda_packaging_utils.cryptography.utils as crypto_utils
+from anaconda_packaging_utils.api._types import BaseApiException
 from anaconda_packaging_utils.types import JsonType, SchemaType
 
 # Logging object for this module
@@ -196,21 +197,12 @@ class PackageMetadata:
     releases: dict[str, VersionMetadata]  # version -> metadata
 
 
-class ApiException(Exception):
+class ApiException(BaseApiException):
     """
-    Generic exception indicating an unrecoverable failure of this API.
-
-    This exception is meant to condense many possible failures into one generic error. The thinking is, if the calling
-    code runs into any API failure, there isn't much that can be done. So it is easier for the caller to handle one
-    exception than many exception types.
+    Generic exception indicating an unrecoverable failure of this API. See the base class for more context.
     """
 
-    def __init__(self, message: str):
-        """
-        Constructs an API exception
-        :param message: String description of the issue encountered.
-        """
-        super().__init__(message if len(message) else "An unknown API issue was encountered.")
+    pass
 
 
 def _calc_package_metadata_url(package: str) -> str:
