@@ -35,5 +35,5 @@ runs:
         source $CONDA/etc/profile.d/conda.sh
         conda init bash
         sed -i 's/- python >=3.*$/- python ${{ inputs.python-version }}.*/' environment.yaml
-        conda env create -f environment.yaml --name anaconda-packaging-utils --force
+        conda env create -f environment.yaml --name anaconda-packaging-utils --yes
         conda run --name anaconda-packaging-utils pip install .
