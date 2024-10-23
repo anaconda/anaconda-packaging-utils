@@ -5,7 +5,6 @@ Description:    Library that provides tooling for pulling information from the p
                 API Docs: https://warehouse.pypa.io/api-reference/json.html#
 """
 
-
 import datetime
 import logging
 from dataclasses import dataclass

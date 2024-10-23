@@ -3,6 +3,7 @@ File:           config_data.py
 Description:    Utility library that parses the standard configuration file used by the scripts. Also provides
                 mechanisms for accessing these user-specified constant values.
 """
+
 import json
 from pathlib import Path
 from threading import Lock

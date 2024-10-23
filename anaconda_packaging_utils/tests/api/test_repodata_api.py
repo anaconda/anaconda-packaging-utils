@@ -2,6 +2,7 @@
 File:           test_repodata_api.py
 Description:    Tests the repodata API
 """
+
 from typing import Final, cast, no_type_check
 from unittest.mock import patch
 

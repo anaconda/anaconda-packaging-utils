@@ -2,6 +2,7 @@
 File:           test_file_io.py
 Description:    Tests file I/O utilities library
 """
+
 from pathlib import Path
 from typing import no_type_check
 from unittest.mock import mock_open, patch

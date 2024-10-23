@@ -2,6 +2,7 @@
 File:           types.py
 Description:    File that contains common types and type aliases (typedefs).
 """
+
 from typing import Final, Union
 
 # Base types that can store value

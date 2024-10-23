@@ -3,7 +3,6 @@ File:           _types.py
 Description:    Contains private constants, types, and classes used in the APIs provided by this package.
 """
 
-
 from typing import Final
 
 #### Constants ####
