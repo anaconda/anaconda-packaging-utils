@@ -3,6 +3,7 @@ File:           test_subshell.py
 Description:    Tests subshell utility library
                 TODO Proper mocking for `subprocess.run()`
 """
+
 import platform
 
 import pytest

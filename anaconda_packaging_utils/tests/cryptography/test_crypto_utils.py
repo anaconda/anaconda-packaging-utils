@@ -2,6 +2,7 @@
 File:           test_crypto_utils.py
 Description:    Tests cryptography utilities library
 """
+
 import anaconda_packaging_utils.cryptography.utils as crypto_utils
 
 

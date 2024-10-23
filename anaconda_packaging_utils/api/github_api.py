@@ -5,6 +5,7 @@ Description:    Library that provides tools for using the PyGitHub API.
                 As the PyGitHub project provides a pretty extensive API, this library primarily provides utility
                 wrappers.
 """
+
 import logging
 from typing import Final, Optional
 

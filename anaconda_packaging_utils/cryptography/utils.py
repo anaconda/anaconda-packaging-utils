@@ -2,6 +2,7 @@
 File:           utils.py
 Description:    Library that provides cryptography and hashing-related utility functions.
 """
+
 import string
 
 

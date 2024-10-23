@@ -2,6 +2,7 @@
 File:           test_config_data.py
 Description:    Tests configuration data library
 """
+
 from typing import Final, no_type_check
 from unittest.mock import mock_open, patch
 

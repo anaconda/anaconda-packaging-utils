@@ -3,7 +3,6 @@ File:           repodata_api.py
 Description:    Library that provides tooling for pulling and parsing `repodata.json` files from `repo.anaconda.com`
 """
 
-
 import logging
 from dataclasses import dataclass
 from enum import Enum

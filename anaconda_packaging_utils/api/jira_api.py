@@ -7,6 +7,7 @@ Description:    Wrapper library that provides tools for using the Python JIRA AP
                   - Source: https://github.com/pycontribs/jira
                   - Docs: https://jira.readthedocs.io/index.html#
 """
+
 import logging
 from typing import Final
 
