@@ -21,7 +21,7 @@ ConfigType = dict[str, dict[str, str]]
 ## Constants ##
 CONFIG_FILE_NAME: Final[str] = ".anaconda-packaging-utils-config.yaml"
 # Note that `mypy` takes issue with `Path.home()` for returning "Any"
-CONFIG_FILE_DEFAULT_PATH: Final[Path] = Path.home() / Path(CONFIG_FILE_NAME)  # type: ignore
+CONFIG_FILE_DEFAULT_PATH: Final[Path] = Path.home() / Path(CONFIG_FILE_NAME)
 
 
 @no_type_check
