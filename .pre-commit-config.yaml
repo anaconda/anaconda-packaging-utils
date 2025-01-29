@@ -59,12 +59,6 @@ repos:
 # `pre-commit` no longer provides a hook for `pytest`, by design
 - repo: local
   hooks:
-  - id: pytest
-    language: system
-    name: pytest
-    always_run: true
-    pass_filenames: false
-    entry: make test
   - id: pytest-cov
     language: system
     name: pytest-cov
